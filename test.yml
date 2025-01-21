@@ -11,6 +11,7 @@
           type: label
   tasks:
     - name: import_labels_test
+      controller_host: "{{ host }}"
       controller_username: "{{ user }}"
       controller_password: "{{ pass }}"
       ansible.controller.import:
