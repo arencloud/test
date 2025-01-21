@@ -10,9 +10,10 @@
             type: organization
           type: label
   tasks:
-    - name: import_labels_test
-      controller_host: "{{ host }}"
-      controller_username: "{{ user }}"
-      controller_password: "{{ pass }}"
+    - name: import labels test
       ansible.controller.import:
         assets: "{{ controller_labels }}"
+        controller_host: "{{ host }}"
+        controller_username: "{{ user }}"
+        controller_password: "{{ pass }}"
+
