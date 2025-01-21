@@ -1,0 +1,17 @@
+- hosts: localhost
+  connection: local
+  vars:
+    controller_labels:
+      - name: Custom
+        natural_key:
+          name: Custom
+          organization:
+            name: Default
+            type: organization
+          type: label
+  tasks:
+    - name: import_labels_test
+      controller_username: "{{ user }}"
+      controller_password: "{{ pass }}"
+      ansible.controller.import:
+        assets: "{{ controller_labels }}"
