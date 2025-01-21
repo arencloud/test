@@ -2,7 +2,7 @@
   connection: local
   vars:
     controller_labels:
-      - name: Custom
+      Custom:
         natural_key:
           name: Custom
           organization:
