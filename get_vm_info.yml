@@ -13,9 +13,11 @@
       register: result
     - ansible.builtin.debug:
         msg: "{{ result.ovirt_vms[0].id }}"
-    - ovirt.ovirt.ovirt_network_info:
+    # Gather information about all clusters which names start with C<production>:
+    - ovirt.ovirt.ovirt_cluster_info:
         auth: "{{ ovirt_auth }}"
-        pattern: name=vlan30
-      register: netres
+        pattern: "name=Default*"
+      register: cluster
     - ansible.builtin.debug:
-        msg: "{{ netres.ovirt_networks }}"
+        msg: "{{ cluster.ovirt_clusters }}"
+
