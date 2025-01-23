@@ -12,4 +12,4 @@
         pattern: name=test* and cluster=Default
       register: result
     - ansible.builtin.debug:
-        msg: "{{ result.ovirt_vms.id }}"
+        msg: "{{ result.ovirt_vms[0].id }}"
