@@ -20,4 +20,28 @@
       register: cluster
     - ansible.builtin.debug:
         msg: "{{ cluster.ovirt_clusters }}"
+    # Gather information about all data centers which names start with C(production):
+    - ovirt.ovirt.ovirt_datacenter_info:
+        auth: "{{ ovirt_auth }}"
+        pattern: name=Default*
+      register: dc
+    - ansible.builtin.debug:
+        msg: "{{ dc.ovirt_datacenters }}"
+    # Gather information about all image external providers named C<glance>:
+    - ovirt.ovirt.ovirt_external_provider_info:
+        auth: "{{ ovirt_auth }}"
+        type: os_network
+      register: external
+    - ansible.builtin.debug:
+        msg: "{{ external.ovirt_external_providers }}"
+    # Gather information about all VMs which relate to a storage domain and
+    # are unregistered:
+    - ovirt.ovirt.ovirt_storage_vm_info:
+        auth: "{{ ovirt_auth }}"
+      register: stor
+    - ansible.builtin.debug:
+        msg: "{{ stor.ovirt_storage_vms }}"
+
+
+
 
