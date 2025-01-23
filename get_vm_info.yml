@@ -1,0 +1,15 @@
+- hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Obtain SSO token
+      ovirt.ovirt.ovirt_auth:
+        url: "{{ api_url }}"
+        username: "{{ user }}"
+        password: "{{ pass }}"
+        insecure: true
+    - ovirt.ovirt.ovirt_vm_info:
+        auth: "{{ ovirt_auth }}"
+        pattern: name=test* and cluster=Default
+      register: result
+    - ansible.builtin.debug:
+        msg: "{{ result.ovirt_vms.id }}"

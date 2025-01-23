@@ -1,0 +1,73 @@
+apiVersion: forklift.konveyor.io/v1beta1
+kind: Plan
+metadata:
+  annotations:
+    populatorLabels: 'True'
+  creationTimestamp: '2025-01-23T21:18:33Z'
+  generation: 1
+  managedFields:
+    - apiVersion: forklift.konveyor.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          .: {}
+          'f:map':
+            .: {}
+            'f:network': {}
+            'f:storage': {}
+          'f:provider':
+            .: {}
+            'f:destination': {}
+            'f:source': {}
+          'f:targetNamespace': {}
+          'f:vms': {}
+      manager: Mozilla
+      operation: Update
+      time: '2025-01-23T21:18:33Z'
+    - apiVersion: forklift.konveyor.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          .: {}
+          'f:conditions': {}
+          'f:migration': {}
+          'f:observedGeneration': {}
+      manager: forklift-controller
+      operation: Update
+      subresource: status
+      time: '2025-01-23T21:18:33Z'
+  name: test
+  namespace: openshift-mtv
+  resourceVersion: '9255416'
+  uid: abdc9784-43b1-4d2c-bab0-035dd42184ac
+spec:
+  map:
+    network:
+      apiVersion: forklift.konveyor.io/v1beta1
+      kind: NetworkMap
+      name: ovirt-f2svn
+      namespace: openshift-mtv
+      uid: 4f9cce9d-9473-4745-bdeb-400289f2a650
+    storage:
+      apiVersion: forklift.konveyor.io/v1beta1
+      kind: StorageMap
+      name: ovirt-sltvs
+      namespace: openshift-mtv
+      uid: 121d02b7-7355-46a5-98da-ea9acc7cb79f
+  provider:
+    destination:
+      apiVersion: forklift.konveyor.io/v1beta1
+      kind: Provider
+      name: host
+      namespace: openshift-mtv
+      uid: 59943d02-f411-451d-b4c5-764ab461794c
+    source:
+      apiVersion: forklift.konveyor.io/v1beta1
+      kind: Provider
+      name: ovirt
+      namespace: openshift-mtv
+      uid: b48d51cb-0d91-4783-b0b4-99a861c36f1c
+  targetNamespace: destination
+  vms:
+    - id: cef535ae-e977-4ed1-9178-f56807b3ca66
+      name: test
