@@ -16,7 +16,7 @@
     - ovirt.ovirt.ovirt_nic_info:
         auth: "{{ ovirt_auth }}"
         vm: "{{ item.name }}"
-      loop: result.ovirt_vms
+      loop: "{{ result.ovirt_vms }}"
       register: vms_nic
     - ansible.builtin.debug:
         msg: "{{ vms_nic.ovirt_nics }}"
