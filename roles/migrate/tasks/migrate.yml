@@ -1,0 +1,14 @@
+- name: Create a Migration manifest to run the Plan
+  redhat.openshift.k8s:
+    api_version: forklift.konveyor.io/v1beta1
+    kind: Migration
+    namespace: openshift-mtv
+    name: "{{ source }}-{{ dc_name | lower }}-{{ cluster_name | lower }}-{{ network_name }}-vms"
+    definition:
+      metadata:
+        name: "{{ source }}-{{ dc_name | lower }}-{{ cluster_name | lower }}-{{ network_name }}-vms"
+        namespace: openshift-mtv
+      spec:
+        plan:
+          name: "{{ source }}-{{ dc_name | lower }}-{{ cluster_name | lower }}-{{ network_name }}-vms"
+          namespace: openshift-mtv

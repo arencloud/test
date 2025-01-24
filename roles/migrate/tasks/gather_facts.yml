@@ -1,0 +1,44 @@
+- name: Obtain SSO token
+  ovirt.ovirt.ovirt_auth:
+    url: "{{ api_url }}"
+    username: "{{ user }}"
+    password: "{{ pass }}"
+    insecure: true
+
+- name: Obtain VM Info
+  ovirt.ovirt.ovirt_vm_info:
+    auth: "{{ ovirt_auth }}"
+    pattern: "name={{ vm_name }} and cluster={{ cluster_name }}"
+  register: vm_info
+
+- name: Obtain Cluster Info
+  ovirt.ovirt.ovirt_cluster_info:
+    auth: "{{ ovirt_auth }}"
+    pattern: "name={{ cluster_name }}"
+  register: cluster_info
+
+- name: Obtain Cluster Info
+  ovirt.ovirt.ovirt_datacenter_info:
+    auth: "{{ ovirt_auth }}"
+    pattern: "name={{ dc_name }}"
+  register: dc_info
+
+- name: Obtain Storage Info
+  ovirt.ovirt.ovirt_storage_vm_info:
+    auth: "{{ ovirt_auth }}"
+    storage_domain: "{{ sorage_domain_name }}"
+  register: storage_info
+
+- name: Obtain Network Info
+  ovirt.ovirt.ovirt_network_info:
+    pattern: "name={{ network_name }}"
+  register: network_info
+
+- name: Setting gathered facts
+  ansible.builtin.set_fact:
+    dc_id: "{{ dc_info.ovirt_datacenters[0].id }}"
+    cluster_id: "{{ cluster_info.ovirt_clusters[0].id }}"
+    network_id: "{{ network_info.ovirt_networks[0].id }}"
+    storage_id: "{{ storage_info.ovirt_storage_vms[0].id }}"
+    vm_id: "{{ vm_info.ovirt_vms[0].id }}"
+    vms_for_plan_spec: "{{ vms_for_plan_spec | default([]) + [{'hooks': [], 'id': vm_id, 'name': vm_name }] }}"

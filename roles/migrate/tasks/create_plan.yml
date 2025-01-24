@@ -1,0 +1,29 @@
+- name: Deploy Virtualization Plan
+  redhat.openshift.k8s:
+    state: present
+    definition:
+      apiVersion: forklift.konveyor.io/v1beta1
+      kind: Plan
+      metadata:
+        name: "{{ source }}-{{ dc_name | lower }}-{{ cluster_name | lower }}-{{ network_name }}-vms"
+        namespace: openshift-mtv
+      spec:
+        archived: false
+        description: "Migrating VMs from {{ network_name }}"
+        map:
+          network:
+            name: "{{ source }}-{{ network_name }}"
+            namespace: openshift-mtv
+          storage:
+            name: "{{ source }}-{{ sorage_domain_name | lower }}"
+            namespace: openshift-mtv
+        provider:
+          destination:
+            name: host
+            namespace: openshift-mtv
+          source:
+            name: "{{ source }}"
+            namespace: openshift-mtv
+        targetNamespace: openshift-mtv
+        vms: "{{ vms_for_plan_spec }}"
+        warm: false

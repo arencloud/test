@@ -1,0 +1,11 @@
+- name: "Step1: Gather facts"
+  ansible.builtin.include_tasks: gather_facts.yml
+
+- name: "Step2: Create Mappings"
+  ansible.builtin.include_tasks: create_mappings.yml
+
+- name: "Step3: Create Plan"
+  ansible.builtin.include_tasks: create_plan.yml
+
+- name: "Step4: Migrate"
+  ansible.builtin.include_tasks: migrate.yml

@@ -1,0 +1,45 @@
+- name: Create or update a NetworkMap
+  redhat.openshift.k8s:
+    state: present
+    definition:
+      apiVersion: forklift.konveyor.io/v1beta1
+      kind: NetworkMap
+      metadata:
+        name: "{{ source }}-{{ network_name }}"
+        namespace: openshift-mtv
+      spec:
+        map:
+          - destination:
+              type: pod
+            source:
+              id: "{{ network_id }}"
+        provider:
+          destination:
+            name: host
+            namespace: openshift-mtv
+          source:
+            name: "{{ source }}"
+            namespace: openshift-mtv
+
+- name: Create or update a StorageMap
+  redhat.openshift.k8s:
+    state: present
+    definition:
+      apiVersion: forklift.konveyor.io/v1beta1
+      kind: StorageMap
+      metadata:
+        name: "{{ source }}-{{ sorage_domain_name | lower }}"
+        namespace: openshift-mtv
+      spec:
+        map:
+          - destination:
+              storageClass: ocs-storagecluster-ceph-rbd-virtualization
+            source:
+              id: "{{ storage_id }}"
+        provider:
+          destination:
+            name: host
+            namespace: openshift-mtv
+          source:
+            name: "{{ source }}"
+            namespace: openshift-mtv
