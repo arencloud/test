@@ -31,6 +31,7 @@
 
 - name: Obtain Network Info
   ovirt.ovirt.ovirt_network_info:
+    auth: "{{ ovirt_auth }}"
     pattern: "name={{ network_name }}"
   register: network_info
 
