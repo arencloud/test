@@ -42,4 +42,4 @@
     network_id: "{{ network_info.ovirt_networks[0].id }}"
     storage_id: "{{ storage_info.ovirt_storage_vms[0].id }}"
     vm_id: "{{ vm_info.ovirt_vms[0].id }}"
-    vms_for_plan_spec: "{{ vms_for_plan_spec | default([]) + [{'hooks': [], 'id': vm_id, 'name': vm_name }] }}"
+    vms_for_plan_spec: "{{ vms_for_plan_spec | default([]) + [{'hooks': [], 'id': vm_info.ovirt_vms[0].id, 'name': vm_name }] }}"
