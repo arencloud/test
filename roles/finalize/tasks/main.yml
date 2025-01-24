@@ -18,5 +18,6 @@
   ovirt.ovirt.ovirt_auth:
     insecure: true
 - ovirt.ovirt.ovirt_vm:
+    auth: "{{ ovirt_auth }}"
     id: cef535ae-e977-4ed1-9178-f56807b3ca66
     comment: "migrated to OCP Virt"
