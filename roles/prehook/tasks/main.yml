@@ -1,0 +1,10 @@
+- name: Get nmcli connection name
+  ansible.builtin.shell: "nmcli con show | grep {{ ansible_default_ipv4.interface }} | awk '{print $1}'"
+  register: con
+- name: Setting facts
+  ansible.builtin.set_fact:
+    iface: "{{ ansible_default_ipv4.interface }}"
+    macaddr: "{{ ansible_default_ipv4.macaddress }}"
+    conn_name: "{{ con.stdout }}"
+- name: Set MAC Address to interface in NMCLI
+  ansible.builtin.shell: "nmcli connection modify {{ conn_name }} 802-3-ethernet.mac-address {{ macaddr }}"
