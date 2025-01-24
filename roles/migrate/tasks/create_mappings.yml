@@ -10,7 +10,9 @@
       spec:
         map:
           - destination:
-              type: pod
+              name: "{{ target_net_name }}"
+              namespace: "{{ target_ns }}"
+              type: multus
             source:
               id: "{{ network_id }}"
         provider:
