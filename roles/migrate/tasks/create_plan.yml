@@ -24,6 +24,6 @@
           source:
             name: "{{ source }}"
             namespace: openshift-mtv
-        targetNamespace: openshift-mtv
+        targetNamespace: "{{ target_ns }}"
         vms: "{{ vms_for_plan_spec }}"
         warm: false
