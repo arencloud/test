@@ -22,5 +22,5 @@
   ovirt.ovirt.ovirt_vm:
     auth: "{{ ovirt_auth }}"
     id: "{{ vm_id }}"
-    comment: "migrated to OCP Virt"
+    comment: "{{ message }}"
   delegate_to: localhost
