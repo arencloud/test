@@ -1,26 +1,23 @@
 - name: Wait for system to become reachable over WinRM
   ansible.builtin.wait_for_connection:
-    timeout: 900
-  delegate_to: localhost
+    timeout: "{{ pause_timer }}"
 
 - name: Wait 300 seconds for port 22 to become open and contain "OpenSSH"
   ansible.builtin.wait_for:
     port: 22
-    host: '{{ ansible_host }}'
+    host: '{{ item.ip }}'
     search_regex: OpenSSH
     delay: 10
   vars:
     ansible_connection: local
-  loop: "{{ groups['all'] }}"
-  delegate_to: localhost
+  loop: "{{ vm_ip_addr }}"
 
 - name: Obtain SSO token
   ovirt.ovirt.ovirt_auth:
     insecure: true
-  delegate_to: localhost
+
 - name: Set comment
   ovirt.ovirt.ovirt_vm:
     auth: "{{ ovirt_auth }}"
     id: "{{ vm_id }}"
     comment: "{{ message }}"
-  delegate_to: localhost

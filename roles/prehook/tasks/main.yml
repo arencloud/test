@@ -8,3 +8,9 @@
     conn_name: "{{ con.stdout }}"
 - name: Set MAC Address to interface in NMCLI
   ansible.builtin.shell: "nmcli connection modify {{ conn_name }} 802-3-ethernet.mac-address {{ macaddr }}"
+
+- name: Collect IP Addresses
+  ansible.builtin.set_fact:
+    vm_ip_addr: "{{ vm_ip_addr | default([]) + [{'ip': ansible_host}] }}"
+  loop: "{{ groups['all'] }}"
+  when: item | length > 0
