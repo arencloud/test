@@ -19,5 +19,5 @@
 - name: Set comment
   ovirt.ovirt.ovirt_vm:
     auth: "{{ ovirt_auth }}"
-    id: "{{ vm_id }}"
+    id: "{{ vm_gl_id }}"
     comment: "{{ message }}"
