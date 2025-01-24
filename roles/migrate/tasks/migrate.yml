@@ -1,5 +1,6 @@
 - name: Create a Migration manifest to run the Plan
   redhat.openshift.k8s:
+    wait: true
     api_version: forklift.konveyor.io/v1beta1
     kind: Migration
     namespace: openshift-mtv
