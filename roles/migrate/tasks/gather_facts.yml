@@ -5,7 +5,7 @@
 - name: Obtain VM Info
   ovirt.ovirt.ovirt_vm_info:
     auth: "{{ ovirt_auth }}"
-    pattern: "name={{ item.name }} and cluster={{ cluster_name }}"
+    pattern: "name={{ item }} and cluster={{ cluster_name }}"
   loop: "{{ vm_name }}"
   register: vm_info
 
