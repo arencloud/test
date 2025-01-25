@@ -56,7 +56,7 @@
 #    vm_id: "{{ vm_info.ovirt_vms[0].id }}"
 #    vms_for_plan_spec: "{{ vms_for_plan_spec | default([]) + [{'hooks': [], 'id': vm_info.ovirt_vms[0].id, 'name': vm_name }] }}"
 #
-- name: Collect IP Addresses
+- name: Collect Global VM IDs
   ansible.builtin.set_stats:
     data:
       vm_ids: "{{ vms_for_plan_spec }}"
