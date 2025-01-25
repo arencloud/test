@@ -4,12 +4,16 @@
     api_version: forklift.konveyor.io/v1beta1
     kind: Migration
     namespace: openshift-mtv
-    name: "{{ source }}-{{ dc_name | lower }}-{{ cluster_name | lower }}-{{ network_name }}-vms"
+    name: "{{ plan_gl_name }}"
     definition:
       metadata:
-        name: "{{ source }}-{{ dc_name | lower }}-{{ cluster_name | lower }}-{{ network_name }}-vms"
+        name: "{{ plan_gl_name }}"
         namespace: openshift-mtv
       spec:
         plan:
-          name: "{{ source }}-{{ dc_name | lower }}-{{ cluster_name | lower }}-{{ network_name }}-vms"
+          name: "{{ plan_gl_name }}"
           namespace: openshift-mtv
+
+- name: Wait for stabilization
+  ansible.builtin.wait_for_connection:
+    timeout: 300

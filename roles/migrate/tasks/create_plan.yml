@@ -1,3 +1,12 @@
+- name: Build unique name
+  ansible.builtin.set_fact:
+    plan_name: "{{ source }}-{{ dc_name | lower }}-{{ cluster_name | lower }}-{{ network_name }}-{{ (999999999999999999999 | random | string + (lookup('pipe', 'date +%s%N'))) | to_uuid() }}"
+
+- name: Collect Global VM IDs
+  ansible.builtin.set_stats:
+    data:
+      plan_gl_name: "{{ plan_name }}"
+
 - name: Deploy Virtualization Plan
   redhat.openshift.k8s:
     state: present
@@ -5,7 +14,7 @@
       apiVersion: forklift.konveyor.io/v1beta1
       kind: Plan
       metadata:
-        name: "{{ source }}-{{ dc_name | lower }}-{{ cluster_name | lower }}-{{ network_name }}-vms"
+        name: "{{ plan_name }}"
         namespace: openshift-mtv
       spec:
         archived: false
