@@ -30,7 +30,7 @@
 - name: Obtain Network Info
   ovirt.ovirt.ovirt_network_info:
     auth: "{{ ovirt_auth }}"
-    pattern: "name={{ network_names }}"
+    pattern: "name={{ network_name }}"
   register: network_info
 
 - name: Setting gathered Infra facts
