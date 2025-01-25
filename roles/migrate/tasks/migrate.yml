@@ -4,14 +4,14 @@
     api_version: forklift.konveyor.io/v1beta1
     kind: Migration
     namespace: openshift-mtv
-    name: "{{ plan_gl_name }}"
+    name: "{{ plan_name }}"
     definition:
       metadata:
-        name: "{{ plan_gl_name }}"
+        name: "{{ plan_name }}"
         namespace: openshift-mtv
       spec:
         plan:
-          name: "{{ plan_gl_name }}"
+          name: "{{ plan_name }}"
           namespace: openshift-mtv
 
 - name: Wait for stabilization
