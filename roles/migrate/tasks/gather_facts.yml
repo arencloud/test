@@ -5,7 +5,7 @@
 - name: Obtain VM Info
   ovirt.ovirt.ovirt_vm_info:
     auth: "{{ ovirt_auth }}"
-    pattern: "name={{ vm_name }} and cluster={{ cluster_name }}"
+    pattern: "cluster={{ cluster_name }}"
   register: vm_info
 
 - name: Obtain Cluster Info
@@ -14,7 +14,7 @@
     pattern: "name={{ cluster_name }}"
   register: cluster_info
 
-- name: Obtain Cluster Info
+- name: Obtain Data Center Info
   ovirt.ovirt.ovirt_datacenter_info:
     auth: "{{ ovirt_auth }}"
     pattern: "name={{ dc_name }}"
@@ -32,16 +32,31 @@
     pattern: "name={{ network_name }}"
   register: network_info
 
-- name: Setting gathered facts
+- name: Setting gathered Infra facts
   ansible.builtin.set_fact:
     dc_id: "{{ dc_info.ovirt_datacenters[0].id }}"
     cluster_id: "{{ cluster_info.ovirt_clusters[0].id }}"
     network_id: "{{ network_info.ovirt_networks[0].id }}"
     storage_id: "{{ storage_info.ovirt_storage_domains[0].id }}"
-    vm_id: "{{ vm_info.ovirt_vms[0].id }}"
-    vms_for_plan_spec: "{{ vms_for_plan_spec | default([]) + [{'hooks': [], 'id': vm_info.ovirt_vms[0].id, 'name': vm_name }] }}"
 
-- name: Collect IP Addresses
+- name: Setting gathered VM facts
+  ansible.builtin.set_fact:
+    vms_for_plan_spec: "{{ vms_for_plan_spec | default([]) + [{'hooks': [], 'id': item.id, 'name': item.name }] }}"
+  loop: "{{ vm_info.ovirt_vms }}"
+  when: item.name in vm_name
+
+
+
+#- name: Setting gathered facts
+#  ansible.builtin.set_fact:
+#    dc_id: "{{ dc_info.ovirt_datacenters[0].id }}"
+#    cluster_id: "{{ cluster_info.ovirt_clusters[0].id }}"
+#    network_id: "{{ network_info.ovirt_networks[0].id }}"
+#    storage_id: "{{ storage_info.ovirt_storage_domains[0].id }}"
+#    vm_id: "{{ vm_info.ovirt_vms[0].id }}"
+#    vms_for_plan_spec: "{{ vms_for_plan_spec | default([]) + [{'hooks': [], 'id': vm_info.ovirt_vms[0].id, 'name': vm_name }] }}"
+#
+- name: Collect Global VM IDs
   ansible.builtin.set_stats:
     data:
-      vm_gl_id: "{{ vm_id }}"
+      vm_ids: "{{ vms_for_plan_spec }}"

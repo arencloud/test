@@ -1,4 +1,4 @@
-- hosts: "{{ managed | default('all') }}"
+- hosts: "{{ vm_name | default('all') }}"
   gather_facts: yes
   become: yes
   roles:
