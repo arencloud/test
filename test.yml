@@ -1,0 +1,8 @@
+- hosts: "{{ vm_name | default('all') }}"
+  gather_facts: yes
+  become: no
+  tasks:
+    - name: ping test
+      ansible.builtin.shell: ping -c 1 -w 2 {{ ansible_host }}
+      delegate_to: localhost
+      when: "windows" in os
