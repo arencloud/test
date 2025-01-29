@@ -2,7 +2,8 @@
   gather_facts: no
   become: no
   tasks:
-    - name: ping test
-      ansible.builtin.shell: ping -c 1 -w 2 {{ ansible_host }}
+    - name: Test reachability to 10.10.10.10 using default vrf
+      ansible.netcommon.net_ping:
+        dest: "{{ ansible_host }}"
       delegate_to: localhost
       when: "'windows' in os"

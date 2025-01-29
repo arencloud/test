@@ -2,3 +2,4 @@ collections:
   - name: ovirt.ovirt
   - name: redhat.openshift
     version: 4.0.1
+  - name: ansible.netcommon
