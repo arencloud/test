@@ -5,4 +5,4 @@
     - name: ping test
       ansible.builtin.shell: ping -c 1 -w 2 {{ ansible_host }}
       delegate_to: localhost
-      when: "windows" in os
+      when: "'windows' in os"
