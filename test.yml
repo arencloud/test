@@ -1,4 +1,4 @@
-- hosts: "{{ vms_picked }}"
+- hosts: "{{ vms_picked | default('all') }}"
   gather_facts: no
   become: no
   tasks:
