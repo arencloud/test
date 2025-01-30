@@ -2,7 +2,12 @@
   gather_facts: no
   become: no
   tasks:
-    - name: ping test
-      ansible.builtin.shell: ping -c 1 -w 2 {{ ansible_host }}
+    - name: Wait 300 seconds for port 22 to become open and contain "OpenSSH"
+      ansible.builtin.wait_for:
+        port: 3389
+        host: '{{ ansible_host }}'
+        delay: 10
+      vars:
+        ansible_connection: local
       delegate_to: localhost
       when: "'windows' in os"
