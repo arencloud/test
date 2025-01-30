@@ -20,7 +20,7 @@
         index_var: my_idx
       run_once: true
       delegate_to: localhost
-      when: "my_idx+1 <= 5"
+      when: "my_idx+1 <= migration_nodes_count"
 
     - name: Add 5 nodes to the list
       ansible.builtin.add_host:
