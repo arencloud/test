@@ -1,0 +1,8 @@
+- name: Wait host to become available
+  ansible.builtin.wait_for:
+    port: 3389
+    host: '{{ item.ip }}'
+    delay: 10
+  vars:
+    ansible_connection: local
+  loop: "{{ vm_ip_addr }}"

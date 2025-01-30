@@ -2,15 +2,18 @@
   ansible.builtin.wait_for_connection:
     timeout: "{{ pause_timer }}"
 
-- name: Wait 300 seconds for port 22 to become open and contain "OpenSSH"
-  ansible.builtin.wait_for:
-    port: 22
-    host: '{{ item.ip }}'
-    search_regex: OpenSSH
-    delay: 10
-  vars:
-    ansible_connection: local
-  loop: "{{ vm_ip_addr }}"
+- name: Identifying VM OS
+  ansible.builtin.set_fact:
+    os_info: "windows"
+  when: "'windows' in vm_os[0]"
+
+- name: Identifying VM OS
+  ansible.builtin.set_fact:
+    os_info: "linux"
+  when: "'linux' in vm_os[0]"
+
+- name: "Check {{ vm_os }} virtual machines availability after migration"
+  ansible.builtin.include_tasks: "{{ os_info }}.yml"
 
 - name: Obtain SSO token
   ovirt.ovirt.ovirt_auth:

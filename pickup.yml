@@ -1,30 +1,5 @@
 - hosts: "{{ group_name | default('all') }}"
   gather_facts: no
   become: no
-  tasks:
-    - name: Collect Nodes
-      ansible.builtin.set_fact:
-        node_count: "{{ node_count | default([]) + [item] }}"
-      loop: "{{ ansible_play_hosts }}"
-      loop_control:
-        index_var: my_idx
-      run_once: true
-      delegate_to: localhost
-      when: "'up' in hostvars[item]['status']"
-    - name: Collect IP Addresses
-      ansible.builtin.set_stats:
-        data:
-          vm_ip_addr: "{{ vm_ip_addr | default([]) + [{'ip': hostvars[item]['ansible_host']}] }}"
-      loop: "{{ node_count }}"
-      loop_control:
-        index_var: my_idx
-      run_once: true
-      delegate_to: localhost
-      when: "my_idx+1 <= migration_nodes_count"
-
-    - name: Add 5 nodes to the list
-      ansible.builtin.set_fact:
-        vms_picked: "{{ vms_picked | default([]) + [item] }}"
-      loop: "{{ node_count }}"
-      run_once: true
-      delegate_to: localhost
+  roles:
+    - role: pickup

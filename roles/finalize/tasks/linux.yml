@@ -1,0 +1,9 @@
+- name: Wait for VM
+  ansible.builtin.wait_for:
+    port: 22
+    host: '{{ item.ip }}'
+    search_regex: OpenSSH
+    delay: 10
+  vars:
+    ansible_connection: local
+  loop: "{{ vm_ip_addr }}"
