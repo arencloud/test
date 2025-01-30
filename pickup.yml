@@ -25,7 +25,7 @@
     - name: Add 5 nodes to the list
       ansible.builtin.add_host:
         name: '{{ item }}'
-        groups: '{{ vm_name }}-new'
+        groups: '{{ group_name }}-new'
       loop: "{{ node_count }}"
       run_once: true
       delegate_to: localhost
