@@ -1,4 +1,4 @@
-- hosts: "{{ group_name }}-new"
+- hosts: "{{ vms_picked }}"
   gather_facts: no
   become: no
   tasks:
