@@ -2,18 +2,8 @@
   ansible.builtin.wait_for_connection:
     timeout: "{{ pause_timer }}"
 
-- name: Identifying VM OS
-  ansible.builtin.set_fact:
-    os_info: "windows"
-  when: "'windows' in vm_os[0]"
-
-- name: Identifying VM OS
-  ansible.builtin.set_fact:
-    os_info: "linux"
-  when: "'linux' in vm_os[0]"
-
-- name: "Check {{ vm_os }} virtual machines availability after migration"
-  ansible.builtin.include_tasks: "{{ os_info }}.yml"
+- name: "Check {{ group_name }} virtual machines availability after migration"
+  ansible.builtin.include_tasks: "{{ group_name }}.yml"
 
 - name: Obtain SSO token
   ovirt.ovirt.ovirt_auth:
