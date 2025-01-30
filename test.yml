@@ -1,16 +1,8 @@
-- hosts: "{{ vm_name | default('all') }}"
+- hosts: "{{ '{{ vm_name }}-new' }}"
   gather_facts: no
   become: no
   tasks:
-    - name: Collect IP Addresses
-      ansible.builtin.set_fact:
-        vm_ip_addr: "{{ vm_ip_addr | default([]) + [{'ip': hostvars[item]['devices']['Ethernet Instance 0'][0]}] }}"
-      loop: "{{ ansible_play_hosts }}"
-      run_once: true
-      delegate_to: localhost
-      when: "'windows' in os"
-
-    - name: Wait 300 seconds for port 22 to become open and contain "OpenSSH"
+    - name: Wait host to become available
       ansible.builtin.wait_for:
         port: 3389
         host: '{{ item.ip }}'
@@ -18,3 +10,6 @@
       vars:
         ansible_connection: local
       loop: "{{ vm_ip_addr }}"
+    - name: print
+      ansible.builtin.debug:
+        msg: "{{ ansible_play_hosts }}"
