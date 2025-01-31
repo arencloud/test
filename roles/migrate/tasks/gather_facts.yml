@@ -5,13 +5,13 @@
 - name: Obtain VM Info
   ovirt.ovirt.ovirt_vm_info:
     auth: "{{ ovirt_auth }}"
-    pattern: "cluster={{ cluster_name }}"
+    pattern: "cluster={{ cluster_name[0] }}"
   register: vm_info
 
 - name: Obtain Cluster Info
   ovirt.ovirt.ovirt_cluster_info:
     auth: "{{ ovirt_auth }}"
-    pattern: "name={{ cluster_name }}"
+    pattern: "name={{ cluster_name[0] }}"
   register: cluster_info
 
 - name: Obtain Data Center Info
