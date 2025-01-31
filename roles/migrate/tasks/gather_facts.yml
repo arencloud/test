@@ -47,7 +47,7 @@
   ansible.builtin.set_fact:
     vms_for_plan_spec: "{{ vms_for_plan_spec | default([]) + [{'hooks': [], 'id': item.id, 'name': item.name }] }}"
   loop: "{{ vm_info.ovirt_vms }}"
-  when: item.name in vms_picked_migrate
+  when: "item.name in vms_picked_migrate"
 
 
 
