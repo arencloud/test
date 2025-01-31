@@ -12,7 +12,7 @@
   ansible.builtin.set_stats:
     data:
       vm_ip_addr: "{{ vm_ip_addr | default([]) + [{'ip': hostvars[item]['ansible_host']}] }}"
-      cluster_name: "{{ hostvars[item]['cluster']} }}"
+      cluster_name: "{{ hostvars[item]['cluster'] }}"
   loop: "{{ node_count }}"
   loop_control:
     index_var: my_idx
