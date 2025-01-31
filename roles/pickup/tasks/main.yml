@@ -24,6 +24,7 @@
   ansible.builtin.set_stats:
     data:
       vms_picked: "{{ vms_picked | default([]) + [item] }}"
+      vms_picked_migrate: "{{ vms_picked_migrate | default([]) + [hostvars[item]['name']] }}"
   loop: "{{ node_count }}"
   loop_control:
     index_var: my_idx
