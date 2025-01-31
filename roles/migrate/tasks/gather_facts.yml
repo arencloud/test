@@ -4,7 +4,7 @@
 
 - name: print
   ansible.builtin.debug:
-    msg: "{{ cluster_name[0] }}"
+    msg: "{{ cluster_name[0] }} - {{ vms_picked_migrate }}"
 
 - name: Obtain VM Info
   ovirt.ovirt.ovirt_vm_info:
