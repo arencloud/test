@@ -1,0 +1,2 @@
+migrate_default_retry: 30
+migrate_default_delay: 10

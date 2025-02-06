@@ -14,6 +14,18 @@
           name: "{{ plan_name }}"
           namespace: openshift-mtv
 
-- name: Wait for stabilization
-  ansible.builtin.wait_for_connection:
-    timeout: 300
+- name: Wait for virtual machines migration task succeed
+  kubernetes.core.k8s_info:
+    name: "{{ plan_name }}"
+    namespace: openshift-mtv
+    kind: Plan
+    api_version: "forklift.konveyor.io/v1beta1"
+  register: migrate_status
+  until: migrate_status|json_query('resources[*].status.conditions[0].message')|unique == ["The plan execution has SUCCEEDED."]
+  retries: "{{ migrate_default_retry }}"
+  delay: "{{ migrate_default_delay }}"
+
+- name: Virtual machines migrated
+  ansible.builtin.debug:
+    msg: "{{ migrate_status|json_query('resources[*].status.conditions[0].message')|unique }}"
+
